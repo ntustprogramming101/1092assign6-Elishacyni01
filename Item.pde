@@ -4,10 +4,15 @@ class Item {
 	float w = SOIL_SIZE;
 	float h = SOIL_SIZE;
 
+  
 	void display(){}
-	void checkCollision(Player player){}
+	
+  void checkCollision(Player player){
+  }
+  
 
-	Item(float x, float y){
+	// Constructor
+  Item(float x, float y){
 		isAlive = true;
 		this.x = x;
 		this.y = y;
