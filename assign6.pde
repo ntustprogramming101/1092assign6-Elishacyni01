@@ -1,7 +1,7 @@
 PImage title, gameover, gamewin, startNormal, startHovered, restartNormal, restartHovered;
 PImage groundhogIdle, groundhogLeft, groundhogRight, groundhogDown;
 PImage bg, life, cabbage, soilEmpty, clock, caution, sweethome;
-PImage soldier, robot, dinosaur;
+PImage soldier, robot, dinosaur, dinosaur2;
 PImage[][] soilImages, stoneImages;
 PFont font;
 
@@ -51,6 +51,7 @@ void setup() {
 	life = loadImage("img/life.png");
 	soldier = loadImage("img/soldier.png");
 	dinosaur = loadImage("img/dinosaur.png");
+  dinosaur2 = loadImage("img/dinosaur2.png");
 	robot = loadImage("img/robot.png");
 	cabbage = loadImage("img/cabbage.png");
 	clock = loadImage("img/clock.png");
@@ -149,9 +150,17 @@ void initGame(){
 		float newY = SOIL_SIZE * ( i * 4 + floor(random(4)));
 
 		switch(i){
-			case 0: case 1: enemies[i] = new Soldier(newX, newY);
-			case 2: case 3: // Requirement 4: Create new Dinosaur in row 9 - 16
-			case 4: case 5: // Requirement 5: Create new Robot in row 17 - 25
+			case 0: case 1:
+        enemies[i] = new Soldier(newX, newY);
+        break;
+			case 2: case 3: 
+        // Requirement 4: Create new Dinosaur in row 9 - 16
+        enemies[i] = new Dinosaur(newX, newY);
+        break;
+			case 4: case 5:
+        // Requirement 5: Create new Robot in row 17 - 25
+        enemies[i] = new Robot(newX, newY);
+        break;
 		}
 
 
@@ -210,8 +219,8 @@ void draw() {
 	    fill(253,184,19);
 	    ellipse(590,50,120,120);
 
-	    // CAREFUL!
-	    // Because of how this translate value is calculated, the Y value of the ground level is actually 0
+	  // CAREFUL!
+	  // Because of how this translate value is calculated, the Y value of the ground level is actually 0
 		pushMatrix();
 		translate(0, max(SOIL_SIZE * -22, SOIL_SIZE * 1 - player.y));
 

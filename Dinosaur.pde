@@ -1,8 +1,44 @@
-class Dinosaur {
+class Dinosaur extends Enemy{
 	// Requirement #4: Complete Dinosaur Class
 
 	final float TRIGGERED_SPEED_MULTIPLIER = 5;
+  float speed = 1f;
+  float currentSpeed = speed;
+  
+  void display(){
+    if(currentSpeed > 0){
+      image(dinosaur, x, y);
+    }else if(currentSpeed < 0){
+      image(dinosaur2, x, y);
+    }
+  }
 
+  void update(){
+    x += currentSpeed;
+    
+    // boundary detection
+    if(x + w >= width || x <= 0){
+      currentSpeed *= -1;
+    }
+ 
+    
+    if(y == player.y){
+      
+      // player leftside
+      if(player.x <= x && currentSpeed < 0){
+       currentSpeed = TRIGGERED_SPEED_MULTIPLIER * speed;
+      }else if(player.x >= x && currentSpeed > 0){
+        currentSpeed = TRIGGERED_SPEED_MULTIPLIER * speed;
+      }
+      
+    }
+  }
+
+
+  Dinosaur(float x, float y){
+    super(x, y);
+  }
+  
 	// HINT: Player Detection in update()
 	/*
 	float currentSpeed = speed

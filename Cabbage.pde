@@ -1,5 +1,6 @@
 class Cabbage extends Item{
 	// Requirement #1: Complete Cabbage Class
+  
   void display(){
     if(isAlive == true){
       image(cabbage, x, y);
