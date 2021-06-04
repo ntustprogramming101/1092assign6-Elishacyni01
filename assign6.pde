@@ -247,6 +247,7 @@ void draw() {
     for(Item i : items){
       if(i == null)continue;
       i.display();
+      i.checkCollision(player);
     }
     
     
