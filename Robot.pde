@@ -8,7 +8,9 @@ class Robot extends Enemy{
 	final int HAND_OFFSET_X_BACKWARD = 16;
   float speed = 2f;
   boolean imageRight = true;
-  boolean checkX, checkY;
+  boolean isReady = true;
+  int laserTimer;
+  Laser laser;
   
   void display(){
     if(imageRight == true){
@@ -16,29 +18,36 @@ class Robot extends Enemy{
     }else{
       image(robot1, x, y);
     }
+    laser.display();
   }
   
   void update(){
     
-    // checkX
-    if(speed > 0 && player.x > x || speed < 0 && player.x < x){
-      checkX = true;
-    }else{
-      checkX = false;
-    }
     
-    // checkY
-    if( (player.row - y / SOIL_SIZE) <= PLAYER_DETECT_RANGE_ROW || (player.row - y / SOIL_SIZE) >= PLAYER_DETECT_RANGE_ROW){
-      checkY = true;
-    }else{
-      checkY = false;
+    
+    
+    
+    // isReady
+    if(!isReady){
+      laserTimer -= 1;
+      if(laserTimer == 0) isReady = true;
     }
     
     // checkX & checkY
-    
-    if(checkX && checkY){
+    if(checkX() && checkY()){
       
+      x += 0;
       // Is laser's cooldown ready?
+      if(isReady){
+        
+        if(speed > 0){
+          laser.fire(x + HAND_OFFSET_X_FORWARD, y + HAND_OFFSET_Y, player.x + w / 2, player.y + h / 2);
+        }else{
+          laser.fire(x + HAND_OFFSET_X_BACKWARD, y + HAND_OFFSET_Y, player.x + w / 2, player.y + h / 2);
+        }
+        laserTimer = LASER_COOLDOWN;
+        isReady = false;
+      }
       
     }else{
       
@@ -59,13 +68,31 @@ class Robot extends Enemy{
         }
       }
     }
+    laser.update();
   }
   
+  void checkCollision(Player player) {
+
+    super.checkCollision(player);
+    laser.checkCollision(player);
+  }
   
+  boolean checkX(){
+    return (speed > 0 &&  player.x + w / 2 > x + HAND_OFFSET_X_FORWARD) || 
+    (speed < 0 &&  player.x + w / 2 < x + HAND_OFFSET_X_BACKWARD);
+  }
+  
+  boolean checkY(){
+    return player.y <= y + PLAYER_DETECT_RANGE_ROW * w  && player.y >= y - PLAYER_DETECT_RANGE_ROW * w;
+    
+  }
   
   Robot(float x, float y){
     super(x, y);
+    laser = new Laser();
     imageRight = true;
+    isReady = true;
+    laserTimer = 0;
   }
   
 	// HINT: Player Detection in update()
