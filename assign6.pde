@@ -1,7 +1,7 @@
 PImage title, gameover, gamewin, startNormal, startHovered, restartNormal, restartHovered;
 PImage groundhogIdle, groundhogLeft, groundhogRight, groundhogDown;
 PImage bg, life, cabbage, soilEmpty, clock, caution, sweethome;
-PImage soldier, robot, dinosaur, dinosaur2;
+PImage soldier, robot, robot1, dinosaur, dinosaur2;
 PImage[][] soilImages, stoneImages;
 PFont font;
 
@@ -53,6 +53,7 @@ void setup() {
 	dinosaur = loadImage("img/dinosaur.png");
   dinosaur2 = loadImage("img/dinosaur2.png");
 	robot = loadImage("img/robot.png");
+  robot1 = loadImage("img/robot1.png");
 	cabbage = loadImage("img/cabbage.png");
 	clock = loadImage("img/clock.png");
 	caution = loadImage("img/caution.png");

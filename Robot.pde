@@ -6,12 +6,66 @@ class Robot extends Enemy{
 	final int HAND_OFFSET_Y = 37;
 	final int HAND_OFFSET_X_FORWARD = 64;
 	final int HAND_OFFSET_X_BACKWARD = 16;
+  float speed = 2f;
+  boolean imageRight = true;
+  boolean checkX, checkY;
   
+  void display(){
+    if(imageRight == true){
+      image(robot, x, y);
+    }else{
+      image(robot1, x, y);
+    }
+  }
+  
+  void update(){
+    
+    // checkX
+    if(speed > 0 && player.x > x || speed < 0 && player.x < x){
+      checkX = true;
+    }else{
+      checkX = false;
+    }
+    
+    // checkY
+    if( (player.row - y / SOIL_SIZE) <= PLAYER_DETECT_RANGE_ROW || (player.row - y / SOIL_SIZE) >= PLAYER_DETECT_RANGE_ROW){
+      checkY = true;
+    }else{
+      checkY = false;
+    }
+    
+    // checkX & checkY
+    
+    if(checkX && checkY){
+      
+      // Is laser's cooldown ready?
+      
+    }else{
+      
+      // Keep moving!
+      x += speed;
+      
+      if(x >= width - SOIL_SIZE || x <= 0){
+        
+        speed *= -1;
+        
+        if(imageRight == true){
+          
+          imageRight = false;
+          
+        }else if(imageRight == false){
+          
+          imageRight = true;
+        }
+      }
+    }
+  }
   
   
   
   Robot(float x, float y){
     super(x, y);
+    imageRight = true;
   }
   
 	// HINT: Player Detection in update()
