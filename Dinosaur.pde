@@ -26,14 +26,23 @@ class Dinosaur extends Enemy{
       
       // player leftside
       if(player.x <= x && currentSpeed < 0){
-       currentSpeed = TRIGGERED_SPEED_MULTIPLIER * speed;
+       currentSpeed = TRIGGERED_SPEED_MULTIPLIER * speed *(-1);
       }else if(player.x >= x && currentSpeed > 0){
         currentSpeed = TRIGGERED_SPEED_MULTIPLIER * speed;
       }
       
     }
   }
+  
+  void checkCollision(Player player){
 
+    if(isHit(x, y, w, h, player.x, player.y, player.w, player.h)){
+
+      player.hurt();
+      currentSpeed = speed;
+      
+    }
+  }
 
   Dinosaur(float x, float y){
     super(x, y);
